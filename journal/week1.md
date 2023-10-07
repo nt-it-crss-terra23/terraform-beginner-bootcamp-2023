@@ -63,3 +63,24 @@ The order of precedence for variable sources is as follows with later sources ta
 4. Any *.auto.tfvars or *.auto.tfvars.json files, processed in lexical order of their filenames.
 
 5. Any -var and -var-file options on the command line, in the order they are provided.
+
+## Dealing with Configuration Drift
+
+## What if we lose our state file?
+
+If you lose your statefile, you most likely have to tear down all your cloud infrastructure manually.
+
+You can use Terraform import but it won't work for all cloud resources. You need to check the Terraform prodivers documentation for resources support import.
+
+### Fix Missing Resources with Terraform Import
+
+`terraform import aws_s3_bucket.bucket bucket-name`
+
+[Terraform Import](https://developer.hashicorp.com/terraform/cli/import)
+[AWS S3 Bucket Import](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)
+
+### Fix Manual Configuration
+
+If some goes and delete or modifies cloud resources manually through ClickOps.
+
+If we run Terraform plan again it will attempt to put our infrastructure back into the expected state fixing Configuration Drift.
